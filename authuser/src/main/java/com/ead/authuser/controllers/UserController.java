@@ -24,7 +24,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
 
-    @GetMapping
+    @GetMapping("/{userId}")
     public ResponseEntity<Object> getOneUser(@PathVariable(value = "userId") UUID userId) {
 
         Optional<UserModel> userModelOptional = userService.findById(userId);
@@ -36,7 +36,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{userId}")
     public ResponseEntity<Object> deleteUser(@PathVariable(value = "userId") UUID userId) {
 
         Optional<UserModel> userModelOptional = userService.findById(userId);
