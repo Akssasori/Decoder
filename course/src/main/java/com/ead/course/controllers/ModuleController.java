@@ -1,6 +1,5 @@
 package com.ead.course.controllers;
 
-import com.ead.course.dtos.CourseDto;
 import com.ead.course.dtos.ModuleDto;
 import com.ead.course.models.CourseModel;
 import com.ead.course.models.ModuleModel;
@@ -9,7 +8,6 @@ import com.ead.course.services.ModuleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,11 +50,11 @@ public class ModuleController {
     public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId") UUID courseId,
                                                @PathVariable(value = "moduleId") UUID moduleId) {
 
-        Optional<ModuleModel> ModuleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
-        if(!ModuleModelOptional.isPresent()) {
+        Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
+        if(!moduleModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
         }
-        moduleService.delete(ModuleModelOptional.get());
+        moduleService.delete(moduleModelOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Module deleted successfully.");
     }
 
@@ -65,12 +63,12 @@ public class ModuleController {
                                                @PathVariable(value = "moduleId") UUID moduleId,
                                                @RequestBody @Valid ModuleDto moduleDto) {
 
-        Optional<ModuleModel> ModuleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
-        if(!ModuleModelOptional.isPresent()) {
+        Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
+        if(!moduleModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
         }
 
-        var ModuleModel = ModuleModelOptional.get();
+        var ModuleModel = moduleModelOptional.get();
         ModuleModel.setTitle(moduleDto.getTitle());
         ModuleModel.setDescription(moduleDto.getDescription());
 
@@ -86,10 +84,10 @@ public class ModuleController {
     public ResponseEntity<Object> getOneModule(@PathVariable(value = "courseId") UUID courseId,
                                                 @PathVariable(value = "moduleId") UUID moduleId) {
 
-        Optional<ModuleModel> ModuleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
-        if(!ModuleModelOptional.isPresent()) {
+        Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
+        if(!moduleModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(ModuleModelOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(moduleModelOptional.get());
     }
 }
