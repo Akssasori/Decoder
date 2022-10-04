@@ -28,7 +28,7 @@ public class UserCourseController {
 
     @GetMapping("/users/{userId}/courses")
     public ResponseEntity<Page<CourseDto>> getAllCoursesByUser(SpecificationTemplate.UserSpec spec,
-                                                               @PageableDefault(page = 0, size = 10, sort = "userId",
+                                                               @PageableDefault(page = 0, size = 10, sort = "courseId",
                                                                        direction = Sort.Direction.ASC) Pageable pageable,
                                                                @PathVariable(value = "userId") UUID userId) {
 
