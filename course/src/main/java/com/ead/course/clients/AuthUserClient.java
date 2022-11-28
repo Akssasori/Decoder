@@ -42,14 +42,15 @@ public class AuthUserClient {
         log.debug("Request URL: {} ", url);
         log.info("request URL: {} ", url);
 
-        try{
+        try {
             ParameterizedTypeReference<ResponsePageDto<UserDto>> responseType =
-                    new ParameterizedTypeReference<ResponsePageDto<UserDto>>() {};
+                    new ParameterizedTypeReference<ResponsePageDto<UserDto>>() {
+                    };
 
             result = restTemplate.exchange(url,
                     HttpMethod.GET, null, responseType);
 
-            searchResult =  result.getBody().getContent();
+            searchResult = result.getBody().getContent();
 
             log.debug("Response Number of Elements: {} ", searchResult.size());
 
@@ -72,6 +73,13 @@ public class AuthUserClient {
         var courseUserDto = new CourseUserDto();
         courseUserDto.setCourseId(courseId);
         courseUserDto.setUserId(userId);
-        restTemplate.postForObject(url,courseUserDto, String.class);
+        restTemplate.postForObject(url, courseUserDto, String.class);
+    }
+
+    public void deleteCourseInAuthUser(UUID courseId) {
+
+        String url = REQUEST_URL_AUTHUSER + "/users/courses/" + courseId;
+        restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
+
     }
 }
