@@ -17,8 +17,4 @@ public interface CourseService {
     Optional<CourseModel> findById(UUID courseId);
 
     Page<CourseModel> findAll(Specification<CourseModel> spec, Pageable pageable);
-
-    boolean existsByUserId(UUID userId);
-
-    void deleteCourseUserByUser(UUID userId);
 }
