@@ -7,7 +7,7 @@ spring:
   application:
     name: ead-authuser-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/ead-authuser
+    url: jdbc:postgresql://localhost:5432/ead-authuser-v2
     username: postgres
     password: coti
   jpa:
@@ -19,6 +19,11 @@ spring:
     properties:
       hibernate:
         show_sql: true
+  rabbitmq:
+    host: localhost
+    password: password
+    port: 5672
+    username: user
   output:
     ansi:
       enabled: Always
@@ -34,6 +39,9 @@ ead:
   api:
     url:
       course: 'http://ead-course-service/ead-course'
+  broker:
+    exchange:
+      userEvent: ead.userevent
 
 eureka:
   client:
