@@ -42,6 +42,15 @@ logging:
     org.hibernate: INFO
 
 #incluir broker properties
+ead:
+  broker:
+    exchange:
+      notificationCommandExchange: ead.notificationcommand
+    queue:
+      notificationCommandQueue:
+        name: ead.notificationcommand.ms.notification
+    key:
+      notificationCommandKey: ms.notification
 
 management:
   endpoints:
