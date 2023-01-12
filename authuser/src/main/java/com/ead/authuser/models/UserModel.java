@@ -14,6 +14,7 @@ import org.springframework.hateoas.RepresentationModel;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -58,14 +59,19 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime lastUpdateDate;
 
-    public UserEventDto convertToUserEventDto(){
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "TB_USERS_ROLES", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleModel> roles = new HashSet<>();
+
+    public UserEventDto convertToUserEventDto() {
         var userEventDto = new UserEventDto();
-        BeanUtils.copyProperties(this,userEventDto);
+        BeanUtils.copyProperties(this, userEventDto);
         userEventDto.setUserType(this.getUserType().toString());
         userEventDto.setUserStatus(this.getUserStatus().toString());
         return userEventDto;
     }
-
 
 
 }
